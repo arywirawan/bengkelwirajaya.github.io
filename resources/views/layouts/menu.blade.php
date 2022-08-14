@@ -104,13 +104,13 @@
                         <li class="nav-item"><a class="nav-link" href="\login">Login</a></li>
                     @endguest
                     @auth
-                        <li class="dropdown">
+                        <li class="dropdown @if ($menu == 'user') active @endif">
                             <a href="#" class="nav-link dropdown-toggle arrow"
                                 data-toggle="dropdown">{{ auth()->user()->name }}</a>
                             <form action="/logout" method="POST" id="submit" class="nav-link dropdown-toggle">
                                 @csrf
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Profile</a></li>
+                                    <li><a href="/profil">Profile</a></li>
                                     <li><a href="#">Keranjang</a></li>
                                     <li><a href="#">Pesanan</a></li>
                                     <li>

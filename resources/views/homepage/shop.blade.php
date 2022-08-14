@@ -1,5 +1,5 @@
 @extends('layouts.index')
-@section('title', 'Beranda')
+@section('title', 'Produk')
 @section('content')
     <!-- Start Shop Page  -->
     <div class="shop-box-inner">
@@ -48,7 +48,8 @@
                                                             class="img-fluid" alt="Image"
                                                             style="width: 300px; height: 300px;">
                                                         <div class="mask-icon">
-                                                            <a class="cart" href="#">Add to Cart</a>
+                                                            <a class="cart" href="{{ url('/shop/' . $item->id) }}">Add to
+                                                                Cart</a>
                                                         </div>
                                                     </div>
                                                     <div class="why-text">

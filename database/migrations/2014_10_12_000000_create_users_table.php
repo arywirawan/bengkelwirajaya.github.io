@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('level')->default('pelanggan');
             $table->string('notelp');
             $table->text('alamat');
-            $table->string('image')->nullable()->default('VD6rWrpXN8hx2CiV9VbHzijNSrrQWcylora5uevO.png');
+            $table->string('image')->nullable()->default('Master.png');
             $table->rememberToken();
             $table->timestamps();   
         });

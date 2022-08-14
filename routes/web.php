@@ -34,6 +34,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomepageController::class, 'index']);
 Route::get('/shop', [HomepageController::class, 'shop']);
+Route::get('/profil',[HomepageController::class, 'profil']);
+Route::post('/profil/edit',[HomepageController::class, 'profiledit']);
+Route::post('/profil/foto',[HomepageController::class, 'profilfoto']);
+Route::get('/shop/{id}',[HomepageController::class, 'detilshop']);
 
 Route::get('users', [UserController::class, 'index'])->name('users.index');
 

@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $inputan['level'] = 'admin';
         $inputan['notelp'] = '0895410933236';
         $inputan['alamat'] = 'Jl. Umalas II No. 36B, Kerobokan Kelod, Kuta Utara, Badung';
-        $inputan['image'] = 'profile-images/hiVAAgmzVJDb4imzfwBm0KhIVnfobbOij7cDv8si.png';
+        $inputan['image'] = 'profile-images/Master.png';
         User::create($inputan);
     }
 }

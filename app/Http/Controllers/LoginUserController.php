@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 class LoginUserController extends Controller
 {
     public function index(){
+         if (auth()->check()) {
+            return redirect('/profil');
+        }
         return view('auth.login');
     }
 
