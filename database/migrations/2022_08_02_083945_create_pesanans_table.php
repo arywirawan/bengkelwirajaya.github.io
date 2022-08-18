@@ -19,7 +19,6 @@ class CreatePesanansTable extends Migration
             $table->integer('produk_id')->unsigned()->nullable();
             $table->integer('panjang');
             $table->integer('lebar');
-            $table->integer('tebal');
             $table->integer('kuantitas');
             $table->bigInteger('harga_total');
             $table->string('status');

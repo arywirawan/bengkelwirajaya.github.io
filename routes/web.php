@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BahanController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetilBahanController;
@@ -8,7 +10,9 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LoginUserController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\PesananUserController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
@@ -37,7 +41,11 @@ Route::get('/shop', [HomepageController::class, 'shop']);
 Route::get('/profil',[HomepageController::class, 'profil']);
 Route::post('/profil/edit',[HomepageController::class, 'profiledit']);
 Route::post('/profil/foto',[HomepageController::class, 'profilfoto']);
-Route::get('/shop/{id}',[HomepageController::class, 'detilshop']);
+Route::get('/shop/{id}/',[HomepageController::class, 'detilshop']);
+Route::get('/shop/cart/{id}/', [CartController::class, 'index'])->name('cart');
+Route::get('/shop/checkout/{id}/', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/listpesanan/', [PesananUserController::class, 'index']);
+Route::get('/listpembayaran', [PesananUserController::class, 'pembayaran']);
 
 Route::get('users', [UserController::class, 'index'])->name('users.index');
 
@@ -67,9 +75,11 @@ Route::group(['prefix'=>'admin', 'middleware'=>'admin'],function(){
     Route::resource('pesanan', PesananController::class);
     Route::resource('transaksi', TransaksiController::class);
     Route::resource('detilbahan', DetilBahanController::class);
+    Route::resource('pembayaran', PembayaranController::class);
     Route::get('profil', [UserController::class, 'index']);
     Route::get('setting', [UserController::class, 'setting']);
     Route::get('laporan', [LaporanController::class, 'index']);
+
     Route::get('proseslaporan', [LaporanController::class, 'proses']);
     Route::get('pesanan/update_pesanan/{id}', [PesananController::class, 'show_pesanan']);
     Route::put('pesanan/update_pesanan/{id}', [PesananController::class, 'update_pesanan'])->name('update.status'); 

@@ -76,4 +76,6 @@ class HomepageController extends Controller
         return view('homepage.detilshop', compact('produk','menu'));
 
      }
+    
+    
 }

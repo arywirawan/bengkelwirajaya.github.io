@@ -26,12 +26,27 @@
                                     <label class="control-label">Quantity</label>
                                     <input class="form-control" value="0" min="0" max="20" type="number">
                                 </div>
+                                <div class="form-row">
+                                    <div class="form-group quantity-box col-md-6">
+                                        <label class="control-label">Panjang</label>
+                                        <input class="form-control" value="0" min="0" max="20"
+                                            type="number">
+
+                                    </div>
+                                    <div class="form-group quantity-box col-md-6">
+                                        <label class="control-label">Lebar</label>
+                                        <input class="form-control" value="0" min="0" max="20"
+                                            type="number">
+                                    </div>
+                                </div>
+
                             </li>
                         </ul>
 
                         <div class="price-box-bar">
                             <div class="cart-and-bay-btn">
-                                <a class="btn hvr-hover" data-fancybox-close="" href="#">Add to cart</a>
+                                <a class="btn hvr-hover" data-fancybox-close=""
+                                    href="{{ url('/shop/cart/' . $produk->id) }}">Add to cart</a>
                             </div>
                         </div>
                     </div>

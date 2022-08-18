@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Pesanan')
+@section('title', 'Pembayaran')
 @section('content')
     <div class="container-fluid">
         <!-- table pesanan -->
@@ -7,7 +7,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Pesanan</h4>
+                        <h4 class="card-title">Pembayaran</h4>
                         <div class="card-tools">
                         </div>
                     </div>
@@ -18,11 +18,8 @@
                                     <select class="form-select form-control" aria-label="Default select example"
                                         name="user_id">
                                         <option selected>Status</option>
-                                        <option>Belum Dibayar</option>
-                                        <option value="">Sedang Dikerjakan</option>
-                                        <option value="">Selesai Dikerjakan</option>
-                                        <option value="">Dikirim</option>
-                                        <option value="">Selesai</option>
+                                        <option>Belum Dikonfirmasi</option>
+                                        <option value="">Sudah Dikonfirmasi</option>
                                     </select>
                                 </div>
                                 <div class="col-auto">
@@ -48,13 +45,10 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th width="50px">ID</th>
+                                        <th width="50px">ID Pembayaran</th>
+                                        <th>ID Pesanan</th>
                                         <th>User</th>
-                                        <th>Produk</th>
-                                        <th>Panjang</th>
-                                        <th>Lebar</th>
-                                        <th>Jumlah</th>
-                                        <th>Harga Bayar</th>
+                                        <th>Bukti Pembayaran</th>
                                         <th>Status</th>
                                         <th width="15%">Action</th>
                                     </tr>
@@ -65,26 +59,20 @@
                                             1
                                         </td>
                                         <td>
-                                            Bayu
-                                        </td>
-                                        <td>
-                                            Teralis Jendela
-                                        </td>
-                                        <td>
-                                            600 mm
-                                        </td>
-                                        <td>
-                                            600 mm
-                                        </td>
-                                        <td>
                                             1
                                         </td>
                                         <td>
-                                            Rp 7000000
+                                            Bayu
+                                        </td>
+                                        <td>
+                                            <a type="button" class="" data-toggle="modal"
+                                                data-target="#showModal{{ 1 }}"><img
+                                                    src="{{ asset('gambar/20220724070347.jpg') }}" alt=""
+                                                    style="width:60px"></a>
                                         </td>
 
                                         <td>
-                                            <span class="badge badge-danger">Belum Dibayar</span>
+                                            <span class="badge badge-success">Sudah Dikonfirmasi</span>
                                         </td>
                                         </td>
                                         <td>
@@ -130,6 +118,21 @@
                                         </div>
                                     </div>
                                     {{-- End Delete Modal --}}
+
+                                    {{-- Show Modal --}}
+                                    <div class="modal fade" id="showModal{{ 1 }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <button type="button" class="close text-light" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <img src="{{ asset('gambar/20220724070347.jpg') }}" alt=""
+                                                style="width:500px">
+
+                                        </div>
+                                    </div>
+                                    {{-- End Modal --}}
                                 </tbody>
                             </table>
                             <!-- untuk menampilkan link page, tambahkan skrip di bawah ini -->

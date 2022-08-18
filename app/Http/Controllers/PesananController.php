@@ -16,36 +16,14 @@ class PesananController extends Controller
      */
     public function index(Request $request)
     {
-         if ($request->ajax()) {
-            $data = Pesanan::with('user','produk')->get();
-            return DataTables::of($data)
-                    ->addColumn('user', function($data) {
-                            return $data->user->name;
-                        })
-                     ->addColumn('produk', function($data) {
-                            return $data->produk->nama_produk;
-                        })
-                    
-                    ->addColumn('action', function($data){
-                        //  $btn = '<a href="javascript:void(0)" class="edit btn btn-info btn-sm">View</a>';
-                        //    $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a>';
-                        //    $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Delete</a>';
-                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '"  class="btn btn-success btn-sm showDetail"><i class="fas fa-eye"></i> Show</a>';
-                        $btn = $btn. '&nbsp';
-                        $btn = $btn.'<a href="/admin/pesanan/'.$data->id.'/edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>';
-                        $btn = $btn.' <form action="'. route('pesanan.destroy', $data->id) .'" method="POST">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="'. csrf_token() .'">
-                                        <button type="submit" class="btn btn-danger btn-sm mt-2" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')">
-                                        <i class="fas fa-trash"></i> Delete</button>
-                                    </form>';   
-                        $btn = $btn.'<a href="/admin/pesanan/update_pesanan/'.$data->id.'" class="btn btn-success btn-sm"><i class="fas fa-edit"></i> Update Pesanan</a>';
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                     ->addIndexColumn()
-                    ->make(true);
-        }  
+         
+        $bahan = Pesanan::latest();
+        $no = 0;
+        if (request('keyword')) {
+         $bahan = $bahan->where('nama_kategori', 'like', '%'.request('keyword').'%')
+         ->orWhere('deskripsi_kategori', 'like', '%'.request('keyword').'%');
+        }
+        $bahan = $bahan->paginate(7);
         return view('pesanan.index');
     }
 
@@ -56,7 +34,7 @@ class PesananController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -90,7 +68,7 @@ class PesananController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('pesanan.edit');
     }
 
     /**
