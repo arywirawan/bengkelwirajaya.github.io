@@ -48,6 +48,7 @@
                                         <th width="50px">ID Pembayaran</th>
                                         <th>ID Pesanan</th>
                                         <th>User</th>
+                                        <th>Bank</th>
                                         <th>Bukti Pembayaran</th>
                                         <th>Status</th>
                                         <th width="15%">Action</th>
@@ -64,6 +65,7 @@
                                         <td>
                                             Bayu
                                         </td>
+                                        <td>BCA</td>
                                         <td>
                                             <a type="button" class="" data-toggle="modal"
                                                 data-target="#showModal{{ 1 }}"><img

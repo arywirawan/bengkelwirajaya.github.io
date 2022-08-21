@@ -15,8 +15,9 @@ class CreatePembayaransTable extends Migration
     {
         Schema::create('pembayarans', function (Blueprint $table) {
            $table->increments('id');
-            $table->integer('user_id')->unsigned()->nullable();
             $table->integer('pesanan_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->string('bank');
             $table->string('bukti_upload');
             $table->string('status');
             $table->timestamps();

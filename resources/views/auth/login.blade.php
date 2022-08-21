@@ -69,12 +69,13 @@
                                 <button class="btn btn-primary btn-login text-uppercase fw-bold"
                                     type="submit">Login</button>
                             </div>
+                            <hr class="my-4">
                             <div class="text-center mt-3">
                                 <p>Belum punya akun? <a href="/register">Signup</a> | <a
                                         href="{{ route('reset') }}">Lupa Password</a></p>
 
                             </div>
-                            <hr class="my-4">
+
                         </form>
                     </div>
                 </div>
