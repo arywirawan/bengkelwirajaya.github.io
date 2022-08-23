@@ -83,5 +83,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>'admin'],function(){
     Route::get('proseslaporan', [LaporanController::class, 'proses']);
     Route::get('pesanan/update_pesanan/{id}', [PesananController::class, 'show_pesanan']);
     Route::put('pesanan/update_pesanan/{id}', [PesananController::class, 'update_pesanan'])->name('update.status'); 
+    Route::get('/profil',[DashboardController::class, 'profil']);
+    Route::post('/profil/edit',[DashboardController::class, 'profiledit']);
+    Route::post('/profil/foto',[DashboardController::class, 'profilfoto']);
 });
     
