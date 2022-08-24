@@ -7,14 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetilBahan extends Model
 {
-   protected $table = 'pesanans';
+   protected $table = 'detil_bahans';
     protected $fillable = [
         'id',
         'produk_id',
         'bahan_id',
         'jumlah_item',
-        'biaya_bahan'
-
+        'total_harga'
     ];
 
      public function bahan(){

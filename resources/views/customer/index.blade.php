@@ -1,4 +1,5 @@
 @extends('layouts.dashboard')
+@section('title', 'Data Pelanggan')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -6,15 +7,25 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            Data Customer
+                            Data Pelanggan
                         </h3>
                     </div>
                     <div class="card-body">
-                        <form action="#">
+                        @if ($message = Session::get('success'))
+                            <div class="container-fluid">
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <p>{{ $message }}</p>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
+                        <form action="{{ route('customer.index') }}" method="GET"">
                             <div class="row">
                                 <div class="col">
                                     <input type="text" name="keyword" id="keyword" class="form-control"
-                                        placeholder="ketik keyword disini">
+                                        value="{{ request('keyword') }}" placeholder="ketik keyword disini">
                                 </div>
                                 <div class="col-auto">
                                     <button class="btn btn-primary">
@@ -29,96 +40,73 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th>ID</th>
                                         <th>Nama</th>
                                         <th>Email</th>
-                                        <th>No Tlp</th>
+                                        <th>No Telepon</th>
                                         <th>Alamat</th>
-                                        <th>Status</th>
-                                        <th></th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Amin</td>
-                                        <td>amin@gmail.com</td>
-                                        <td>085852527575</td>
-                                        <td>
-                                            Jln. Jend Sudirman no.1, Kudus
-                                        </td>
-                                        <td>
-                                            Aktif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('customer.edit', 1) }}"
-                                                class="btn btn-sm btn-primary">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Budi</td>
-                                        <td>budi@gmail.com</td>
-                                        <td>085852527576</td>
-                                        <td>
-                                            Jln. Jend Sudirman no.2, Kudus
-                                        </td>
-                                        <td>
-                                            Aktif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('customer.edit', 2) }}"
-                                                class="btn btn-sm btn-primary">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Iwan</td>
-                                        <td>iwan@gmail.com</td>
-                                        <td>085852527577</td>
-                                        <td>
-                                            Jln. Jend Sudirman no.3, Kudus
-                                        </td>
-                                        <td>
-                                            Aktif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('customer.edit', 3) }}"
-                                                class="btn btn-sm btn-primary">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Lala</td>
-                                        <td>lala@gmail.com</td>
-                                        <td>085852527578</td>
-                                        <td>
-                                            Jln. Jend Sudirman no.4, Kudus
-                                        </td>
-                                        <td>
-                                            Aktif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('customer.edit', 4) }}"
-                                                class="btn btn-sm btn-primary">Edit</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Didi</td>
-                                        <td>didi@gmail.com</td>
-                                        <td>085852527579</td>
-                                        <td>
-                                            Jln. Jend Sudirman no.5, Kudus
-                                        </td>
-                                        <td>
-                                            Aktif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('customer.edit', 5) }}"
-                                                class="btn btn-sm btn-primary">Edit</a>
-                                        </td>
-                                    </tr>
+
+                                    @foreach ($bahan as $item)
+                                        <tr>
+                                            <td>
+                                                {{ $item->id }}
+                                            </td>
+                                            <td>
+                                                {{ $item->name }}
+                                            </td>
+                                            <td>
+                                                {{ $item->email }}
+                                            </td>
+                                            <td>
+                                                {{ $item->notelp }}
+                                            </td>
+                                            <td>
+                                                {{ $item->alamat }}
+                                            </td>
+                                            </td>
+                                            <td>
+                                                <a type="button" class="btn btn-sm btn-danger mr-2 mb-2"
+                                                    data-toggle="modal" data-target="#deleteModal{{ $item->id }}"
+                                                    href="#"><i class="fas fa-trash"></i>
+                                                    Hapus
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus User
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Apakah Anda yakin menghapus data ini?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                        <form action="{{ route('customer.destroy', $item->id) }}"
+                                                            method="post" style="display:inline;">
+                                                            @csrf
+                                                            {{ method_field('delete') }}
+                                                            <button type="submit" class="btn btn-sm btn-danger mb-2">
+                                                                Hapus
+                                                            </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

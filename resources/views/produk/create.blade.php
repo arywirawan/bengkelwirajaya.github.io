@@ -1,8 +1,9 @@
 @extends('layouts.dashboard')
+@section('title', 'Tambah Produk')
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col col-lg-6 col-md-6">
+            <div class="col col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Form Produk</h3>
@@ -12,16 +13,32 @@
                             </a>
                         </div>
                     </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> Ada kesalahan dalam input Anda.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="card-body">
-                        <form action="#">
+                        <form action="{{ route('produk.store') }}" enctype="multipart/form-data" method="POST">
+                            @csrf
                             <div class="form-group">
-                                <label for="nama_produk">Nama Produk</label>
+                                <label for="nama_kategori">Nama</label>
                                 <input type="text" name="nama_produk" id="nama_produk" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="slug_produk">Slug Produk</label>
-                                <input type="text" name="slug_produk" id="slug_produk" class="form-control">
+                                <label for="formFile" class="form-label">Foto</label>
+                                <input class="form-control col-sm-4" type="file" id="foto_produk" name="foto_produk">
                             </div>
+                            <div class="form-group">
+                                <label for="nama_kategori">Harga</label>
+                                <input type="text" name="harga_jasa" id="harga_jasa" class="form-control">
+                            </div>
+
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
                                 <textarea name="deskripsi" id="deskripsi" cols="30" rows="5" class="form-control"></textarea>

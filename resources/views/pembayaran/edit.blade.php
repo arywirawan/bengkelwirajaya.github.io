@@ -1,14 +1,14 @@
 @extends('layouts.dashboard')
-@section('title', 'Ubah Produk')
+@section('title', 'Ubah Pembayaran')
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Form Produk</h3>
+                        <h3 class="card-title">Form Edit Pembayaran</h3>
                         <div class="card-tools">
-                            <a href="{{ route('produk.index') }}" class="btn btn-sm btn-danger">
+                            <a href="{{ route('pembayaran.index') }}" class="btn btn-sm btn-danger">
                                 Tutup
                             </a>
                         </div>
@@ -24,31 +24,32 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form action="{{ route('produk.update', $produk->id) }}" enctype="multipart/form-data"
+                        <form action="{{ route('pembayaran.update', $pembayaran->id) }}" enctype="multipart/form-data"
                             method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label for="nama_kategori">Nama</label>
-                                <input type="text" name="nama_produk" id="nama_produk" class="form-control"
-                                    value="{{ $produk->nama_produk }}">
+                                <label for="Produk">ID Pesanan</label>
+                                <input type="text" name="pesanan_id" id="pesanan_id" class="form-control"
+                                    value="{{ $pembayaran->pesanan_id }}" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="formFile" class="form-label">Gambar Sebelumnya</label>
-                                <img src="/gambar/{{ $produk->foto_produk }}" alt="" style="width:100px">
+                                <label for="User">User</label>
+                                <input type="text" name="user_id" id="id_user" class="form-control"
+                                    value="{{ $pembayaran->user_id }}" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="formFile" class="form-label">Gambar</label>
-                                <input class="form-control col-sm-4" type="file" id="foto_produk" name="foto_produk">
+                                <label for="Produk">Bank</label>
+                                <input type="text" name="bank" id="bank" class="form-control"
+                                    value="{{ $pembayaran->bank }}" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="nama_kategori">Harga</label>
-                                <input type="text" name="harga_jasa" id="harga_jasa" class="form-control"
-                                    value="{{ $produk->harga_jasa }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="deskripsi">Deskripsi</label>
-                                <textarea name="deskripsi" id="deskripsi" cols="30" rows="5" class="form-control">{{ $produk->deskripsi }}</textarea>
+                                <label for="user" class="form-label">Status Pesanan</label>
+                                <select class="form-select form-control" aria-label="Default select example" name="status">
+                                    <option value="{{ $pembayaran->status }}" selected>{{ $pembayaran->status }}</option>
+                                    <option value="Belum Terkonfirmasi">Belum Terkonfirmasi</option>
+                                    <option value="Terkonfirmasi">Terkonfirmasi</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Simpan</button>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pembayaran;
 use App\Models\Pesanan;
 use App\Models\Produk;
 use App\Models\User;
@@ -14,7 +15,7 @@ class DashboardController extends Controller
         $pesanan = Pesanan::all();
         $user = User::all();
         $produk = Produk::all();
-        $pembayaran = 0;
+        $pembayaran = Pembayaran::all();
         return view('dashboard.index', compact('pesanan', 'user', 'produk', 'pembayaran'));
     }
 
@@ -63,3 +64,4 @@ class DashboardController extends Controller
         return back();
      }
 }
+    

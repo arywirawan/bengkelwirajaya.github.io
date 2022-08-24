@@ -47,33 +47,69 @@
                                         <th width="50px">ID</th>
                                         <th>Produk</th>
                                         <th>Bahan</th>
-                                        <th>Jumlah Dipakai</th>
+                                        <th>Jumlah</th>
                                         <th>Biaya Bahan</th>
+                                        <th>Total Harga</th>
                                         <th width="15%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($detilbahan as $item)
+                                    <?php
+                                    $no = 1;
+                                    ?>
+                                    @foreach ($detilbahan as $detilkey => $item)
+                                        @php
+                                            echo $item->id;
+                                        @endphp
                                         <tr>
                                             <td>
-                                                {{ $item->id }}
+                                                {{ $no++ }}
                                             </td>
                                             <td>
                                                 {{ $item->produk->nama_produk }}
                                             </td>
                                             <td>
-                                                {{ $item->bahan->nama_bahan }}
+                                                <?php
+                                                // nama bahan
+                                                foreach ($detilbahan[$detilkey]->bahan as $bahankey => $value) {
+                                                    echo $value->nama_bahan;
+                                                    echo '<hr>';
+                                                }
+                                                ?>
                                             </td>
                                             <td>
-                                                {{ $item->jumlah_item }}
-                                            </td>
-                                            <td>
-                                                {{ $item->biaya_bahan }}
+                                                <?php
+                                                // jumlah
+                                                foreach ($detilbahan[$detilkey]->bahan as $bahankey => $value) {
+                                                    echo $value->jumlah;
+                                                    echo '<hr>';
+                                                }
+                                                ?>
                                             </td>
 
                                             <td>
-                                                <a href="{{ route('kategori.edit', $item->id) }}"
+                                                <?php
+                                                // biaya
+                                                foreach ($detilbahan[$detilkey]->bahan as $bahankey => $value) {
+                                                    echo $value->harga;
+                                                    echo '<hr>';
+                                                }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                // total
+                                                foreach ($detilbahan[$detilkey]->bahan as $bahankey => $value) {
+                                                    echo $value->harga * $value->jumlah;
+                                                    echo '<hr>';
+                                                }
+                                                ?>
+                                            </td>
+
+
+                                            <td>
+                                                <a href="{{ route('detilbahan.edit', $item->id) }}"
                                                     class="btn btn-sm btn-primary mr-2 mb-2"><i class="fas fa-edit"></i>
                                                     Edit
                                                 </a>
@@ -123,7 +159,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-sm btn-secondary"
                                                             data-dismiss="modal">Close</button>
-                                                        <form action="{{ route('kategori.destroy', $item->id) }}"
+                                                        <form action="{{ route('detilbahan.destroy', $item->id) }}"
                                                             method="post" style="display:inline;">
                                                             @csrf
                                                             {{ method_field('delete') }}
@@ -138,7 +174,7 @@
                                 </tbody>
                             </table>
                             <!-- untuk menampilkan link page, tambahkan skrip di bawah ini -->
-                            {{ $detilbahan->links() }}
+                            {{-- {{ $detilbahan->links() }} --}}
                         </div>
                     </div>
                 </div>

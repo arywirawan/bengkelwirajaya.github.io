@@ -11,7 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="{{ asset('images/logo.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="images/logo.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="images/icon.png">
 
     <title>Admin Wirajaya - @yield('title')</title>
@@ -203,6 +203,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </script>
 
     @yield('ajax')
+
+    @yield('custome_js')
 
 </body>
 

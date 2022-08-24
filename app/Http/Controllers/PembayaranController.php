@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
@@ -13,7 +14,13 @@ class PembayaranController extends Controller
      */
     public function index()
     {
-        return view('pembayaran.index');
+       $pembayaran = Pembayaran::latest();
+        $no = 0;
+        if (request('keyword')) {
+         $pembayaran = $pembayaran->where('status', 'like', '%'.request('keyword').'%');
+        }
+        $pembayaran = $pembayaran->paginate(7);
+        return view('pembayaran.index', compact('pembayaran'));
     }
 
     /**
@@ -56,7 +63,8 @@ class PembayaranController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pembayaran = Pembayaran::findOrFail($id);
+        return view('pembayaran.edit', compact('pembayaran'));
     }
 
     /**
@@ -66,9 +74,15 @@ class PembayaranController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pembayaran $pembayaran)
     {
-        //
+        $request->validate([
+            'status' => 'required',
+        ]);
+        $input = $request->all();
+        $pembayaran->update($input);
+         
+        return redirect('/admin/pembayaran')->with('success','Data berhasil disimpan!');
     }
 
     /**

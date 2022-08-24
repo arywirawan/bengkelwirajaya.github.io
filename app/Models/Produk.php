@@ -10,8 +10,8 @@ class Produk extends Model
    protected $table = 'produks';
     protected $fillable = [
         'id',
-        'nama_produks',
-        'foto_produks',
+        'nama_produk',
+        'foto_produk',
         'harga_jasa',
         'deskripsi'
     ];

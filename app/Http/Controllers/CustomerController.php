@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -13,8 +15,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data = array('title' => 'Data Customer');
-        return view('customer.index', $data);
+         $pelanggan = User::latest();
+        $no = 0;
+        if (request('keyword')) {
+         $pelanggan = $pelanggan->where('name', 'like', '%'.request('keyword').'%')
+         ->orWhere('email', 'like', '%'.request('keyword').'%');
+        }
+        $bahan = $pelanggan->paginate(7);
+        return view('customer.index', compact('bahan', 'no'));
     }
 
     /**
@@ -81,6 +89,9 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+          DB::table('users')->where('id',$id)->delete();
+  
+        return redirect('/admin/customer')->with('success','Data pelanggan berhasil dihapus!');
     }
 }

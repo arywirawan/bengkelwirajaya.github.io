@@ -91,22 +91,24 @@
                                 <div class="rounded p-2 bg-light">
                                     <div class="media mb-2 border-bottom">
                                         <div class="media-body"> <a href="{{ url('/shop/1') }}">Teralis Jendela</a>
-                                            <div class="small text-muted">Harga: Rp 200000 <span class="mx-2">|</span>
+                                            <div class="small text-muted">
+                                                Harga: Rp
+                                                <span class="item-total-harga">200000</span>
+                                                <span class="mx-2">|</span>
                                                 Qty:
-                                                2 <span class="mx-2">|</span> Subtotal: Rp 400000 <span
-                                                    class="mx-2">|</span> Panjang: 600 mm <span class="mx-2">|</span>
-                                                Lebar: 600 mm</div>
+                                                <span class="item-qty">2</span>
+                                                <span class="mx-2">|</span>
+                                                Subtotal: Rp
+                                                <span class="item-sub-total">400000</span>
+                                                <span class="mx-2">|</span> Panjang:
+                                                <span class="item-panjang">600</span> mm
+                                                <span class="mx-2">|</span>
+                                                Lebar:
+                                                <span class="lebar">600</span> mm
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="media mb-2 border-bottom">
-                                        <div class="media-body"> <a href="{{ url('/shop/1') }}">Pagar </a>
-                                            <div class="small text-muted">Harga: Rp 1000000 <span class="mx-2">|</span>
-                                                Qty:
-                                                1 <span class="mx-2">|</span> Subtotal: Rp 1000000 <span
-                                                    class="mx-2">|</span> Panjang: 600 mm<span class="mx-2">|</span>
-                                                Lebar: 600 mm</div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -122,11 +124,11 @@
                                 <hr class="my-1">
                                 <div class="d-flex">
                                     <h4>Sub Total</h4>
-                                    <div class="ml-auto font-weight-bold"> Rp 1400000 </div>
+                                    <div class="ml-auto font-weight-bold"> Rp <span id="sub-total">1400000</span> </div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Biaya Bahan Baku</h4>
-                                    <div class="ml-auto font-weight-bold"> Rp 1000000 </div>
+                                    <div class="ml-auto font-weight-bold"> Rp <span id="biaya-bahan-baku">1000000</span> </div>
                                 </div>
                                 <div class="d-flex">
                                     <h4>Ongkos Kirim</h4>
@@ -135,7 +137,7 @@
                                 <hr>
                                 <div class="d-flex gr-total">
                                     <h5>Grand Total</h5>
-                                    <div class="ml-auto h5"> Rp 2400000 </div>
+                                    <div class="ml-auto h5"> Rp <span id="grand-total">1000000</span> </div>
                                 </div>
                                 <hr>
                             </div>

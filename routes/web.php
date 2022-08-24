@@ -43,7 +43,8 @@ Route::post('/profil/edit',[HomepageController::class, 'profiledit']);
 Route::post('/profil/foto',[HomepageController::class, 'profilfoto']);
 Route::get('/shop/{id}/',[HomepageController::class, 'detilshop']);
 Route::get('/shop/cart/{id}/', [CartController::class, 'index'])->name('cart');
-Route::get('/shop/checkout/{id}/', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/shop/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/checkout/', [CheckoutController::class, 'index'])->name('checkout');
 Route::get('/listpesanan/', [PesananUserController::class, 'index']);
 Route::get('/listpembayaran', [PesananUserController::class, 'pembayaran']);
 
@@ -79,12 +80,12 @@ Route::group(['prefix'=>'admin', 'middleware'=>'admin'],function(){
     Route::get('profil', [UserController::class, 'index']);
     Route::get('setting', [UserController::class, 'setting']);
     Route::get('laporan', [LaporanController::class, 'index']);
+    Route::get('/profil',[DashboardController::class, 'profil']);
+    Route::post('/profil/edit',[DashboardController::class, 'profiledit']);
+    Route::post('/profil/foto',[DashboardController::class, 'profilfoto']);
 
     Route::get('proseslaporan', [LaporanController::class, 'proses']);
     Route::get('pesanan/update_pesanan/{id}', [PesananController::class, 'show_pesanan']);
     Route::put('pesanan/update_pesanan/{id}', [PesananController::class, 'update_pesanan'])->name('update.status'); 
-    Route::get('/profil',[DashboardController::class, 'profil']);
-    Route::post('/profil/edit',[DashboardController::class, 'profiledit']);
-    Route::post('/profil/foto',[DashboardController::class, 'profilfoto']);
 });
     

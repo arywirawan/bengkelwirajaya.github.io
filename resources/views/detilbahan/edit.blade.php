@@ -28,9 +28,10 @@
                         <button id="addform" class="btn btn-default">Tambah Form Bahan</button>
                         <button id="deleteform" class="btn btn-danger">Delete Form Bahan</button>
 
-
-                        <form action="{{ route('detilbahan.store') }}" enctype="multipart/form-data" method="POST">
+                        <form action="{{ route('detilbahan.update', $detilbahan->id) }}" enctype="multipart/form-data"
+                            method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="form-group">
                                 <label for="user" class="form-label">Produk</label>
                                 <select class="form-select form-control" name="produk_id">
@@ -40,21 +41,30 @@
                                 </select>
                             </div>
                             <div id="group-form-bahan">
+                                <?php
+                                $bahan_id = explode(',', $detilbahan->bahan_id);
+                                $jumlah_item = explode(',', $detilbahan->jumlah_item);
+                                foreach ($bahan_id as $key => $value):
+                                ?>
                                 <div class="border-top p-1 border-radius mt-3 mb-3 bahan-form">
                                     <div class="form-group">
                                         <label for="user" class="form-label">Bahan</label>
-                                        <select class="form-select form-control selectbahan" name="bahan_id[]" onchange="totalFunction()">
+                                        <select class="form-select form-control selectbahan" name="bahan_id[]"
+                                            onchange="totalFunction()">
                                             @foreach ($bahan as $item)
-                                                <option value="{{ $item->id }}" data-price={{ $item->harga }}>
-                                                    {{ $item->nama_bahan }} (Rp.{{$item->harga}})</option>
+                                                <option value="{{ $item->id }}" data-price={{ $item->harga }}
+                                                    {{ $value == $item->id ? 'selected' : '' }}>
+                                                    {{ $item->nama_bahan }} (Rp.{{ $item->harga }})</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="jumlah">Jumlah Item</label>
-                                        <input type="number" name="jumlah_item[]" class="form-control jumlah" onkeyup="totalFunction()">
+                                        <input type="number" name="jumlah_item[]" class="form-control jumlah"
+                                            value="{{ $jumlah_item[$key] }}" onkeyup="totalFunction()">
                                     </div>
                                 </div>
+                                <?php endforeach;?>
                             </div>
 
                             <div class="form-group">

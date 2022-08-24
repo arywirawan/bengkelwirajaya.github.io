@@ -97,6 +97,13 @@
     <script src="{{ asset('js/contact-form-script.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
     <script src="https://kit.fontawesome.com/177e464d2d.js" crossorigin="anonymous"></script>
+
+
+    {{-- custome JS --}}
+    <script src="{{ asset('js/myglobal.js') }}"></script>
+
+
+    @yield('custome_js')
 </body>
 
 </html>

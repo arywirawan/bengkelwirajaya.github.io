@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Ubah Bahan Baku')
+@section('title', 'Ubah Pesanan')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -24,25 +24,26 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form action="{{ route('pesanan.update', 1) }}" enctype="multipart/form-data" method="POST">
+                        <form action="{{ route('pesanan.update', $pesanan->id) }}" enctype="multipart/form-data"
+                            method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
                                 <label for="User">User</label>
-                                <input type="text" name="id_user" id="id_user" class="form-control" value="Bayu"
-                                    disabled>
+                                <input type="text" name="id_user" id="id_user" class="form-control"
+                                    value="{{ $pesanan->user->name }}" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="Produk">Produk</label>
                                 <input type="text" name="id_produk" id="id_produk" class="form-control"
-                                    value="Teralis Jendela" disabled>
+                                    value="{{ $pesanan->produk->nama_produk }}" disabled>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="Panjang">Panjang</label>
                                     <div class="form-inline">
                                         <input type="number" class="form-control" id="panjang" name="panjang"
-                                            value="600" disabled>
+                                            value="{{ $pesanan->panjang }}"disabled>
                                         <label for="">mm</label>
                                     </div>
                                 </div>
@@ -50,30 +51,30 @@
                                     <label for="Lebar">Lebar</label>
                                     <div class="form-inline">
                                         <input type="number" class="form-control" id="lebar" name="lebar"
-                                            value="600" disabled>
+                                            value="{{ $pesanan->lebar }}" disabled>
                                         <label for="">mm</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="deskripsi">Jumlah</label>
-                                <input type="number" name="jumlah" id="jumlah" class="form-control" value="1"
-                                    disabled>
+                                <input type="number" name="jumlah" id="jumlah" class="form-control"
+                                    value="{{ $pesanan->kuantitas }}" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="deskripsi">Harga Total</label>
                                 <input type="text" name="harga_total" id="harga" class="form-control"
-                                    value="Rp 7000000" disabled>
+                                    value="{{ $pesanan->harga_total }}" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="user" class="form-label">Status Pesanan</label>
-                                <select class="form-select form-control" aria-label="Default select example" name="user_id">
-                                    <option value="">Silahkan pilih-</option>
-                                    <option selected>Belum Dibayar</option>
-                                    <option value="">Sedang Dikerjakan</option>
-                                    <option value="">Selesai Dikerjakan</option>
-                                    <option value="">Dikirim</option>
-                                    <option value="">Selesai</option>
+                                <select class="form-select form-control" aria-label="Default select example" name="status">
+                                    <option value="{{ $pesanan->status }}" selected>{{ $pesanan->status }}</option>
+                                    <option value="Belum Dibayar">Belum Dibayar</option>
+                                    <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
+                                    <option value="Selesai Dikerjakan">Selesai Dikerjakan</option>
+                                    <option value="Sedang Dikirim">Sedang Dikirim</option>
+                                    <option value="Selesai">Selesai</option>
                                 </select>
                             </div>
                             <div class="form-group">

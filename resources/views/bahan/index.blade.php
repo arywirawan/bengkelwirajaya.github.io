@@ -107,7 +107,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-sm btn-secondary"
                                                             data-dismiss="modal">Close</button>
-                                                        <form action="{{ route('kategori.destroy', $item->id) }}"
+                                                        <form action="{{ route('bahan.destroy', $item->id) }}"
                                                             method="post" style="display:inline;">
                                                             @csrf
                                                             {{ method_field('delete') }}

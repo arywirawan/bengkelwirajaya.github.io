@@ -20,8 +20,8 @@ class BahanController extends Controller
         $bahan = Bahan::latest();
         $no = 0;
         if (request('keyword')) {
-         $bahan = $bahan->where('nama_kategori', 'like', '%'.request('keyword').'%')
-         ->orWhere('deskripsi_kategori', 'like', '%'.request('keyword').'%');
+         $bahan = $bahan->where('nama_bahan', 'like', '%'.request('keyword').'%')
+         ->orWhere('ukuran', 'like', '%'.request('keyword').'%');
         }
         $bahan = $bahan->paginate(7);
         return view('bahan.index', compact('bahan', 'no'));

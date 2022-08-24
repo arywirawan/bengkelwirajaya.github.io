@@ -1,7 +1,8 @@
 @extends('layouts.dashboard')
+@section('title', 'Produk')
 @section('content')
     <div class="container-fluid">
-        <!-- table produk -->
+        <!-- table kategori -->
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -14,14 +15,14 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="#">
+                        <form action="{{ route('produk.index') }}" method="GET">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" name="keyword" id="keyword" class="form-control"
-                                        placeholder="ketik keyword disini">
+                                    <input type="text" value="{{ request('keyword') }}" name="keyword" id="keyword"
+                                        class="form-control" placeholder="ketik keyword disini">
                                 </div>
                                 <div class="col-auto">
-                                    <button class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary">
                                         Cari
                                     </button>
                                 </div>
@@ -29,111 +30,123 @@
                         </form>
                     </div>
                     <div class="card-body">
+                        @if ($message = Session::get('success'))
+                            <div class="container-fluid">
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <p>{{ $message }}</p>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th width="50px">No</th>
-                                        <th>Gambar</th>
-                                        <th>Kode</th>
+                                        <th width="50px">ID</th>
                                         <th>Nama</th>
-                                        <th>Jumlah Produk</th>
-                                        <th></th>
+                                        <th>Gambar</th>
+                                        <th>Harga</th>
+                                        <th>Deskripsi</th>
+                                        <th width="15%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>
-                                            <img src="{{ asset('images/slide1.jpg') }}" alt="produk 1" width='150px'>
-                                            <div class="row mt-2">
-                                                <div class="col">
-                                                    <input type="file" name="gambar" id="gambar">
+
+                                    @foreach ($produk as $item)
+                                        <tr>
+                                            <td>
+                                                {{ $item->id }}
+                                            </td>
+                                            <td>
+                                                {{ $item->nama_produk }}
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="/gambar/{{ $item->foto_produk }}" alt=""
+                                                        style="width: 70px; height: 70px" />
                                                 </div>
-                                                <div class="col-auto">
-                                                    <button class="btn btn-sm btn-primary">Upload</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>KATE-1</td>
-                                        <td>Baju Anak</td>
-                                        <td>12 Produk</td>
-                                        <td>
-                                            <a href="{{ route('produk.show', 2) }}"
-                                                class="btn btn-sm btn-primary mr-2 mb-2">
-                                                Detail
-                                            </a>
-                                            <a href="{{ route('produk.edit', 2) }}"
-                                                class="btn btn-sm btn-primary mr-2 mb-2">
-                                                Edit
-                                            </a>
-                                            <button class="btn btn-sm btn-danger mb-2">
-                                                Hapus
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>
-                                            <img src="{{ asset('images/slide1.jpg') }}" alt="produk 1" width='150px'>
-                                            <div class="row mt-2">
-                                                <div class="col">
-                                                    <input type="file" name="gambar" id="gambar">
-                                                </div>
-                                                <div class="col-auto">
-                                                    <button class="btn btn-sm btn-primary">Upload</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>KATE-2</td>
-                                        <td>Baju Wanita</td>
-                                        <td>20 Produk</td>
-                                        <td>
-                                            <a href="{{ route('produk.show', 2) }}"
-                                                class="btn btn-sm btn-primary mr-2 mb-2">
-                                                Detail
-                                            </a>
-                                            <a href="{{ route('produk.edit', 2) }}"
-                                                class="btn btn-sm btn-primary mr-2 mb-2">
-                                                Edit
-                                            </a>
-                                            <button class="btn btn-sm btn-danger mb-2">
-                                                Hapus
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>
-                                            <img src="{{ asset('images/slide1.jpg') }}" alt="produk 1" width='150px'>
-                                            <div class="row mt-2">
-                                                <div class="col">
-                                                    <input type="file" name="gambar" id="gambar">
-                                                </div>
-                                                <div class="col-auto">
-                                                    <button class="btn btn-sm btn-primary">Upload</button>
+                                            </td>
+                                            <td>
+                                                {{ $item->harga_jasa }}
+                                            </td>
+                                            <td>
+                                                <!-- Button trigger modal -->
+                                                <a type="button" class="" data-toggle="modal"
+                                                    data-target="#exampleModal{{ $item->id }}" href="#">
+                                                    Klik link untuk lihat detail
+                                                </a>
+                                            </td>
+
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('produk.edit', $item->id) }}"
+                                                    class="btn btn-sm btn-primary mr-2 mb-2"><i class="fas fa-edit"></i>
+                                                    Edit
+                                                </a>
+                                                <a type="button" class="btn btn-sm btn-danger mr-2 mb-2"
+                                                    data-toggle="modal" data-target="#deleteModal{{ $item->id }}"
+                                                    href="#"><i class="fas fa-trash"></i>
+                                                    Hapus
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Deskripsi Kategori
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{ $item->deskripsi }}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>KATE-3</td>
-                                        <td>Baju Wanita</td>
-                                        <td>20 Produk</td>
-                                        <td>
-                                            <a href="{{ route('produk.show', 2) }}"
-                                                class="btn btn-sm btn-primary mr-2 mb-2">
-                                                Detail
-                                            </a>
-                                            <a href="{{ route('produk.edit', 2) }}"
-                                                class="btn btn-sm btn-primary mr-2 mb-2">
-                                                Edit
-                                            </a>
-                                            <button class="btn btn-sm btn-danger mb-2">
-                                                Hapus
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        </div>
+
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Bahan
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Apakah Anda yakin menghapus data ini?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                        <form action="{{ route('produk.destroy', $item->id) }}"
+                                                            method="post" style="display:inline;">
+                                                            @csrf
+                                                            {{ method_field('delete') }}
+                                                            <button type="submit" class="btn btn-sm btn-danger mb-2">
+                                                                Hapus
+                                                            </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </tbody>
                             </table>
+                            <!-- untuk menampilkan link page, tambahkan skrip di bawah ini -->
+                            {{ $produk->links() }}
                         </div>
                     </div>
                 </div>

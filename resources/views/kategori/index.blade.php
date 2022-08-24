@@ -132,7 +132,7 @@
                                                             method="post" style="display:inline;">
                                                             @csrf
                                                             {{ method_field('delete') }}
-                                                            <button type="submit" class="btn btn-sm btn-danger mb-2">
+                                                            <button type="submit" class="btn btn-sm btn-danger">
                                                                 Hapus
                                                             </button>
                                                     </div>

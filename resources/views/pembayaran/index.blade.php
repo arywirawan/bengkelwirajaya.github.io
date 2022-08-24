@@ -12,14 +12,14 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('pesanan.index') }}" method="GET">
+                        <form action="{{ route('pembayaran.index') }}" method="GET">
                             <div class="row">
                                 <div class="col">
                                     <select class="form-select form-control" aria-label="Default select example"
                                         name="user_id">
                                         <option selected>Status</option>
-                                        <option>Belum Dikonfirmasi</option>
-                                        <option value="">Sudah Dikonfirmasi</option>
+                                        <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
+                                        <option value="Sudah Dikonfirmasi">Sudah Dikonfirmasi</option>
                                     </select>
                                 </div>
                                 <div class="col-auto">
@@ -50,91 +50,97 @@
                                         <th>User</th>
                                         <th>Bank</th>
                                         <th>Bukti Pembayaran</th>
+                                        <th>Waktu Upload</th>
                                         <th>Status</th>
                                         <th width="15%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Bayu
-                                        </td>
-                                        <td>BCA</td>
-                                        <td>
-                                            <a type="button" class="" data-toggle="modal"
-                                                data-target="#showModal{{ 1 }}"><img
-                                                    src="{{ asset('gambar/20220724070347.jpg') }}" alt=""
-                                                    style="width:60px"></a>
-                                        </td>
+                                    @foreach ($pembayaran as $item)
+                                        <tr>
+                                            <td>
+                                                {{ $item->id }}
+                                            </td>
+                                            <td>
+                                                {{ $item->pesanan_id }}
+                                            </td>
+                                            <td>
+                                                {{ $item->user->name }}
+                                            </td>
+                                            <td>{{ $item->bank }}</td>
+                                            <td>
+                                                <a type="button" class="" data-toggle="modal"
+                                                    data-target="#showModal{{ $item->id }}"><img
+                                                        src="{{ asset('gambar/' . $item->bukti_upload) }}" alt=""
+                                                        style="width:60px"></a>
+                                            </td>
+                                            <td>
+                                                {{ $item->created_at }}
+                                            </td>
 
-                                        <td>
-                                            <span class="badge badge-success">Sudah Dikonfirmasi</span>
-                                        </td>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('pesanan.edit', 1) }}"
-                                                class="btn btn-sm btn-primary mr-2 mb-2"><i class="fas fa-edit"></i>
-                                                Edit
-                                            </a>
-                                            <a type="button" class="btn btn-sm btn-danger mr-2 mb-2" data-toggle="modal"
-                                                data-target="#deleteModal{{ 1 }}" href="#"><i
-                                                    class="fas fa-trash"></i>
-                                                Hapus
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!-- Delete Modal -->
-                                    <div class="modal fade" id="deleteModal{{ 1 }}" tabindex="-1"
-                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Hapus Bahan
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Apakah Anda yakin menghapus data ini?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-sm btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <form action="{{ route('kategori.destroy', 1) }}" method="post"
-                                                        style="display:inline;">
-                                                        @csrf
-                                                        {{ method_field('delete') }}
-                                                        <button type="submit" class="btn btn-sm btn-danger mb-2">
-                                                            Hapus
+                                            <td>
+                                                {{ $item->status }}
+                                            </td>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('pembayaran.edit', $item->id) }}"
+                                                    class="btn btn-sm btn-primary mr-2 mb-2"><i class="fas fa-edit"></i>
+                                                    Edit
+                                                </a>
+                                                <a type="button" class="btn btn-sm btn-danger mr-2 mb-2"
+                                                    data-toggle="modal" data-target="#deleteModal{{ $item->id }}"
+                                                    href="#"><i class="fas fa-trash"></i>
+                                                    Hapus
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Bahan
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
                                                         </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Apakah Anda yakin menghapus data ini?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                        <form action="{{ route('pembayaran.destroy', 1) }}" method="post"
+                                                            style="display:inline;">
+                                                            @csrf
+                                                            {{ method_field('delete') }}
+                                                            <button type="submit" class="btn btn-sm btn-danger mb-2">
+                                                                Hapus
+                                                            </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- End Delete Modal --}}
+                                        {{-- End Delete Modal --}}
 
-                                    {{-- Show Modal --}}
-                                    <div class="modal fade" id="showModal{{ 1 }}" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <button type="button" class="close text-light" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <img src="{{ asset('gambar/20220724070347.jpg') }}" alt=""
-                                                style="width:500px">
+                                        {{-- Show Modal --}}
+                                        <div class="modal fade" id="showModal{{ 1 }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <button type="button" class="close text-light" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <img src="{{ asset('gambar/' . $item->bukti_upload) }}" alt=""
+                                                    style="width:500px">
 
+                                            </div>
                                         </div>
-                                    </div>
-                                    {{-- End Modal --}}
+                                        {{-- End Modal --}}
+                                    @endforeach
                                 </tbody>
                             </table>
                             <!-- untuk menampilkan link page, tambahkan skrip di bawah ini -->

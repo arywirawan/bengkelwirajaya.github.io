@@ -17,14 +17,13 @@ class PesananController extends Controller
     public function index(Request $request)
     {
          
-        $bahan = Pesanan::latest();
+        $pesanan = Pesanan::latest();
         $no = 0;
         if (request('keyword')) {
-         $bahan = $bahan->where('nama_kategori', 'like', '%'.request('keyword').'%')
-         ->orWhere('deskripsi_kategori', 'like', '%'.request('keyword').'%');
+         $pesanan = $pesanan->where('status', 'like', '%'.request('keyword').'%');
         }
-        $bahan = $bahan->paginate(7);
-        return view('pesanan.index');
+        $pesanan = $pesanan->paginate(7);
+        return view('pesanan.index', compact('pesanan'));
     }
 
     /**
@@ -68,7 +67,8 @@ class PesananController extends Controller
      */
     public function edit($id)
     {
-        return view('pesanan.edit');
+       $pesanan = Pesanan::findOrFail($id);
+        return view('pesanan.edit', compact('pesanan'));
     }
 
     /**
@@ -81,13 +81,6 @@ class PesananController extends Controller
     public function update(Request $request, Pesanan $pesanan)
     {
         $request->validate([
-            'user_id' => 'required',
-            'produk_id' => 'required',
-            'panjang' => 'required',
-            'lebar' => 'required',
-            'tebal' => 'required',
-            'kuantitas' => 'required',
-            'harga_total' => 'required',
             'status' => 'required',
         ]);
         $input = $request->all();
@@ -104,7 +97,9 @@ class PesananController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('pesanans')->where('id',$id)->delete();
+  
+        return redirect('/admin/pesanan')->with('success','Data pesanan berhasil dihapus!');
     }
 
     public function show_pesanan($id){

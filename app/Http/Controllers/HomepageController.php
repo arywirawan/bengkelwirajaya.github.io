@@ -4,8 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use App\Models\User;
+use App\Models\DetilBahan;
+use App\Models\Invoice;
+use DB;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
+
 
 class HomepageController extends Controller
 {
@@ -72,10 +78,10 @@ class HomepageController extends Controller
 
      public function detilshop($id){
         $produk = Produk::find($id);
+        // $detilBahan = DB::table('detil_bahans')->where('produk_id', $produk->id)->get();
         $menu = 'produk';
-        return view('homepage.detilshop', compact('produk','menu'));
+        return view('homepage.detilshop', compact('produk','menu',));
 
      }
-    
     
 }

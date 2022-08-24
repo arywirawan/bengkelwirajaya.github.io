@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembayaran extends Model
 {
-    use HasFactory;
+      protected $table = 'pembayarans';
+    protected $fillable = [
+        
+        'status',
+
+    ];
+     public function user(){
+           return $this->belongsTo(User::class);
+       }
 }

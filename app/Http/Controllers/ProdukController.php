@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProdukController extends Controller
 {
@@ -13,8 +15,14 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        $data = array('title' => 'Produk');
-        return view('produk.index', $data);
+        $produk = Produk::latest();
+        $no = 0;
+        if (request('keyword')) {
+         $produk = $produk->where('nama_produk', 'like', '%'.request('keyword').'%')
+         ->orWhere('deskripsi', 'like', '%'.request('keyword').'%');
+        }
+        $produk = $produk->paginate(7);
+        return view('produk.index', compact('produk', 'no'));
     }
 
     /**
@@ -36,7 +44,33 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $request->validate([
+            'nama_produk' => 'required',
+            'foto_produk' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'harga_jasa' => 'required',
+            'deskripsi' => 'required',
+            
+        ]);
+
+        // $imageName = time().'.'.$request->logo_perusahaan->getClientOriginalName();  
+     
+        // $request->logo_perusahaan->move(public_path('images'), $imageName);
+
+        // Perusahaan::create($request->all());
+
+        $input = $request->all();
+  
+        if ($image = $request->file('foto_produk')) {
+            $destinationPath = 'gambar/';
+            $gambarProduk = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $gambarProduk);
+            $input['foto_produk'] = "$gambarProduk";
+        }
+    
+        Produk::create($input);
+         
+        return redirect('/admin/produk')->with('success','Data produk berhasil disimpan!');
+
     }
 
     /**
@@ -59,8 +93,8 @@ class ProdukController extends Controller
      */
     public function edit($id)
     {
-        $data = array('title' => 'Form Edit Produk');
-        return view('produk.edit', $data);
+       $produk = Produk::findOrFail($id);
+        return view('produk.edit', compact('produk'));
     }
 
     /**
@@ -70,9 +104,25 @@ class ProdukController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Produk $produk)
     {
-        //
+         $request->validate([
+            'nama_produk' => 'required',
+            'foto_produk' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'harga_jasa' => 'required',
+            'deskripsi' => 'required',
+    
+        ]);
+        $input = $request->all();
+
+         if ($image = $request->file('foto_produk')) {
+            $destinationPath = 'gambar/';
+            $gambarProduk = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $gambarProduk);
+            $input['foto_produk'] = "$gambarProduk";
+        }
+        $produk->update($input);
+        return redirect('/admin/produk')->with('success','Data produk berhasil disimpan!');
     }
 
     /**
@@ -83,6 +133,8 @@ class ProdukController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('produks')->where('id',$id)->delete();
+  
+        return redirect('/admin/produk')->with('success','Data produk berhasil dihapus!');
     }
 }
