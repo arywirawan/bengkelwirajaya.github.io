@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-         $pelanggan = User::latest();
+         $pelanggan = User::where('level', 'like', 'pelanggan')->latest();
         $no = 0;
         if (request('keyword')) {
          $pelanggan = $pelanggan->where('name', 'like', '%'.request('keyword').'%')

@@ -12,25 +12,35 @@
                                 <tr>
                                     <th>ID Pembayaran</th>
                                     <th>ID Pesanan</th>
+                                    <th>Bank</th>
                                     <th>Status Pembayaran</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="name-pr">
-                                        <a href="#">
-                                            1
-                                        </a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-                                            1
-                                        </a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <span class="badge badge-danger">Belum Dikofirmasi</span>
-                                    </td>
-                                </tr>
+                                @foreach ($bayar as $item)
+                                    <tr>
+                                        <td class="name-pr">
+                                            <a href="#">
+                                                {{ $item->id }}
+                                            </a>
+                                        </td>
+                                        <td class="name-pr">
+                                            <a href="#">
+                                                {{ $item->pesanan_id }}
+                                            </a>
+                                        </td>
+                                        <td class="price-pr">
+                                            {{ $item->bank }}
+                                        </td>
+                                        <td class="price-pr">
+                                            @if ($item->status == 'Belum Terkonfirmasi')
+                                                <span class="badge badge-danger">{{ $item->status }}</span>
+                                            @else
+                                                <span class="badge badge-success">{{ $item->status }}</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

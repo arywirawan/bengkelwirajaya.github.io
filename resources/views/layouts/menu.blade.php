@@ -34,7 +34,7 @@
                                 @csrf
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ url('/profil') }}">Profil Saya</a></li>
-                                    <li><a href="{{ url('/shop/cart/1') }}">Keranjang</a></li>
+                                    <li><a href="{{ url('/cart') }}">Keranjang</a></li>
                                     <li><a href="{{ url('/listpesanan') }}">Pesanan</a></li>
                                     <li><a href="{{ url('/listpembayaran') }}">Pembayaran</a></li>
                                     <li>
@@ -56,6 +56,8 @@
 
 <script>
     function myFunction() {
-        document.getElementById("submit").submit();
+        if (confirm("Apakah anda yakin ingin Logout?") == true) {
+            document.getElementById("submit").submit();
+        }
     }
 </script>

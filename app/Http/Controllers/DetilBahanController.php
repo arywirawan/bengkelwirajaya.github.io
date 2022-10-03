@@ -91,7 +91,7 @@ class DetilBahanController extends Controller
 
         DetilBahan::create($input);
 
-        return redirect('/admin/detilbahan')->with('success', 'Data Detil Bahan berhasil disimpan!');
+        return redirect('/admin/detilbahan')->with('success', 'Data Detil Produk berhasil disimpan!');
     }
 
     /**
@@ -137,7 +137,7 @@ class DetilBahanController extends Controller
         $detilbahan->bahan_id = implode(",", $input['bahan_id']);
 
         $detilbahan->save($input);
-        return redirect('/admin/detilbahan')->with('success', 'Data Detil Bahan berhasil disimpan!');
+        return redirect('/admin/detilbahan')->with('success', 'Data Detil Produk berhasil disimpan!');
     }
 
     /**
@@ -149,7 +149,7 @@ class DetilBahanController extends Controller
     public function destroy($id)
     {
         if (DetilBahan::findOrFail($id)->delete()) {
-            return redirect('/admin/detilbahan')->with('success', 'Data Detil Bahan berhasil di delete!');
+            return redirect('/admin/detilbahan')->with('success', 'Data Detil Produk berhasil di delete!');
         }
     }
 }

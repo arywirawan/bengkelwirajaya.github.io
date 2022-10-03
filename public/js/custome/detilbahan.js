@@ -26,18 +26,16 @@ function totalFunction() {
 
     var price = 0;
     var subTotal = 0;
-    var fixTotal = 0;
 
     for (let index = 0; index <= formBahan.length - 1; index++) {
         price =
-            selectbahan[0].options[selectbahan[0].selectedIndex].getAttribute(
+            selectbahan[index].options[selectbahan[index].selectedIndex].getAttribute(
                 "data-price"
             );
 
-        subTotal = subTotal + parseInt(jumlah[index].value || 0) * price;
-        fixTotal = fixTotal + subTotal;
+        subTotal = subTotal + (parseInt(jumlah[index].value || 0) * price);
     }
-    document.getElementById("total").value =fixTotal;
+    document.getElementById("total").value =subTotal;
 }
 
 totalFunction();

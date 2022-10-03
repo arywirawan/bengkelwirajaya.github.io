@@ -64,8 +64,10 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <img src="/gambar/{{ $item->foto_produk }}" alt=""
-                                                        style="width: 70px; height: 70px" />
+                                                    <a type="button" class="" data-toggle="modal"
+                                                        data-target="#showModal{{ $item->id }}"><img
+                                                            src="{{ asset('gambar/' . $item->foto_produk) }}" alt=""
+                                                            style="width:70px"></a>
                                                 </div>
                                             </td>
                                             <td>
@@ -98,7 +100,7 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Deskripsi Kategori
+                                                        <h5 class="modal-title" id="exampleModalLabel">Deskripsi Produk
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
@@ -106,7 +108,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        {{ $item->deskripsi }}
+                                                        {!! $item->deskripsi !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,7 +120,7 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Bahan
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Produk
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
@@ -138,10 +140,26 @@
                                                             <button type="submit" class="btn btn-sm btn-danger mb-2">
                                                                 Hapus
                                                             </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        {{-- End Delete Modal --}}
+                                        {{-- Show Modal --}}
+                                        <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <button type="button" class="close text-light" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <img src="{{ asset('gambar/' . $item->foto_produk) }}" alt=""
+                                                    style="width:500px">
+
+                                            </div>
+                                        </div>
+                                        {{-- End Modal --}}
                                     @endforeach
                                 </tbody>
                             </table>

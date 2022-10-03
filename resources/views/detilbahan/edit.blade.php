@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Tambah Bahan Baku')
+@section('title', 'Ubah Detil Produk')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -70,8 +70,8 @@
                             <div class="form-group">
                                 <label for="total">Total Biaya</label>
                                 <div>Rp.</div>
-                                <input type="int" class="form-control" id="total" value='0'
-                                    readonly="readonly" name="total_harga">
+                                <input type="int" class="form-control" id="total" value='0' readonly="readonly"
+                                    name="total_harga">
                             </div>
 
                             <div class="form-group">

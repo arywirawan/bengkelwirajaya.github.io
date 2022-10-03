@@ -74,7 +74,7 @@
                 <li class="nav-item">
                     <a href="{{ route('detilbahan.index') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Detail Bahan Baku</p>
+                        <p>Detail Produk</p>
                     </a>
                 </li>
             </ul>

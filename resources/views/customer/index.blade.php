@@ -102,6 +102,7 @@
                                                             <button type="submit" class="btn btn-sm btn-danger mb-2">
                                                                 Hapus
                                                             </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

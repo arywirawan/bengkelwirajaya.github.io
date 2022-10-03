@@ -41,11 +41,19 @@ Route::get('/shop', [HomepageController::class, 'shop']);
 Route::get('/profil',[HomepageController::class, 'profil']);
 Route::post('/profil/edit',[HomepageController::class, 'profiledit']);
 Route::post('/profil/foto',[HomepageController::class, 'profilfoto']);
-Route::get('/shop/{id}/',[HomepageController::class, 'detilshop']);
-Route::get('/shop/cart/{id}/', [CartController::class, 'index'])->name('cart');
-Route::get('/shop/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
+Route::get('/shop/{id}/',[HomepageController::class, 'detilshop'])->middleware('auth');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::get('/addcart/{id}', [CartController::class, 'addcart'])->name('addcart');
+
+Route::patch('update-cart', [CartController::class, 'update']);
+Route::delete('remove-cart', [CartController::class, 'remove']);
+
+// Route::get('/shop/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
 Route::get('/checkout/', [CheckoutController::class, 'index'])->name('checkout');
-Route::get('/listpesanan/', [PesananUserController::class, 'index']);
+Route::post('/checkoutpesanan/', [CheckoutController::class, 'checkout'])->name('checkoutpesanan');
+Route::get('/listpesanan/', [PesananUserController::class, 'index'])->name('pesanan');
+Route::post('/listpesanan/', [PesananUserController::class, 'upload'])->name('uploadbukti');
+Route::put('/listpesanan/selesai/{id}',[PesananUserController::class, 'pesananselesai'])->name('pesanan.selesai');
 Route::get('/listpembayaran', [PesananUserController::class, 'pembayaran']);
 
 Route::get('users', [UserController::class, 'index'])->name('users.index');
@@ -74,6 +82,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'admin'],function(){
     Route::resource('customer', CustomerController::class);
     Route::resource('bahan', BahanController::class);
     Route::resource('pesanan', PesananController::class);
+    Route::get('/cetakpesanan', [PesananController::class, 'generatePDF'])->name('cetak');
     Route::resource('transaksi', TransaksiController::class);
     Route::resource('detilbahan', DetilBahanController::class);
     Route::resource('pembayaran', PembayaranController::class);

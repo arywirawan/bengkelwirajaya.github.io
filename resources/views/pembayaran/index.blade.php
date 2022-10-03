@@ -15,11 +15,11 @@
                         <form action="{{ route('pembayaran.index') }}" method="GET">
                             <div class="row">
                                 <div class="col">
-                                    <select class="form-select form-control" aria-label="Default select example"
-                                        name="user_id">
-                                        <option selected>Status</option>
-                                        <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
-                                        <option value="Sudah Dikonfirmasi">Sudah Dikonfirmasi</option>
+                                    <select class="form-select form-control" name="keyword">
+                                        <option selected readonly value="">Status</option>
+                                        <option value="Terkonfirmasi">Terkonfirmasi</option>
+                                        <option value="Belum Terkonfirmasi">Belum Dikonfirmasi</option>
+
                                     </select>
                                 </div>
                                 <div class="col-auto">
@@ -79,7 +79,11 @@
                                             </td>
 
                                             <td>
-                                                {{ $item->status }}
+                                                @if ($item->status == 'Belum Terkonfirmasi')
+                                                    <span class="badge badge-danger">{{ $item->status }}</span>
+                                                @else
+                                                    <span class="badge badge-success">{{ $item->status }}</span>
+                                                @endif
                                             </td>
                                             </td>
                                             <td>
@@ -113,13 +117,14 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-sm btn-secondary"
                                                             data-dismiss="modal">Close</button>
-                                                        <form action="{{ route('pembayaran.destroy', 1) }}" method="post"
-                                                            style="display:inline;">
+                                                        <form action="{{ route('pembayaran.destroy', $item->id) }}"
+                                                            method="post" style="display:inline;">
                                                             @csrf
                                                             {{ method_field('delete') }}
                                                             <button type="submit" class="btn btn-sm btn-danger mb-2">
                                                                 Hapus
                                                             </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,7 +132,7 @@
                                         {{-- End Delete Modal --}}
 
                                         {{-- Show Modal --}}
-                                        <div class="modal fade" id="showModal{{ 1 }}" tabindex="-1"
+                                        <div class="modal fade" id="showModal{{ $item->id }}" tabindex="-1"
                                             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <button type="button" class="close text-light" data-dismiss="modal"

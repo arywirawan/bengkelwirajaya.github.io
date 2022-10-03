@@ -114,6 +114,7 @@
                                                             <button type="submit" class="btn btn-sm btn-danger mb-2">
                                                                 Hapus
                                                             </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -129,6 +130,25 @@
             </div>
         </div>
     </div>
+
+    @foreach ($stoks as $stok)
+        <?php
+        if ($stok->stok <= 0) {
+            echo "
+                                                        <script>
+                                                            alert('Tidak ada stok pada bahan $stok->nama_bahan, silahkan menambah stok');
+                                                        </script>
+                                                        ";
+        } else {
+            echo "
+                                                        <script>
+                                                            alert('Stok produk $stok->nama_bahan tinggal $stok->stok, silahkan menambah stok');
+                                                        </script>
+                                                        ";
+        }
+        
+        ?>
+    @endforeach
 
 @endsection
 

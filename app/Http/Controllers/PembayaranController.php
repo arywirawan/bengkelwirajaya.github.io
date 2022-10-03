@@ -13,11 +13,11 @@ class PembayaranController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
        $pembayaran = Pembayaran::latest();
         $no = 0;
         if (request('keyword')) {
-         $pembayaran = $pembayaran->where('status', 'like', '%'.request('keyword').'%');
+         $pembayaran = $pembayaran->where('status', 'like', request('keyword'));
         }
         $pembayaran = $pembayaran->paginate(7);
         return view('pembayaran.index', compact('pembayaran'));
@@ -93,6 +93,8 @@ class PembayaranController extends Controller
      */
     public function destroy($id)
     {
-        //
+         if (Pembayaran::findOrFail($id)->delete()) {
+            return redirect('/admin/pembayaran')->with('success', 'Data Pembayaran berhasil dihapus!');
+         }
     }
 }

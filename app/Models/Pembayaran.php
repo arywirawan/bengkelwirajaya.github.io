@@ -9,9 +9,12 @@ class Pembayaran extends Model
 {
       protected $table = 'pembayarans';
     protected $fillable = [
-        
+        'id',
+        'pesanan_id',   
+        'user_id',
+        'bank',
+        'bukti_upload',
         'status',
-
     ];
      public function user(){
            return $this->belongsTo(User::class);

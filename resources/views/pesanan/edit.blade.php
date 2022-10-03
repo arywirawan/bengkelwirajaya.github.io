@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Ubah Pesanan')
+@section('title', 'Ubah Pesanan ')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -33,17 +33,18 @@
                                 <input type="text" name="id_user" id="id_user" class="form-control"
                                     value="{{ $pesanan->user->name }}" disabled>
                             </div>
+                            @foreach ($pesanan->listpesanan as $listpesanankey => $value)
                             <div class="form-group">
                                 <label for="Produk">Produk</label>
                                 <input type="text" name="id_produk" id="id_produk" class="form-control"
-                                    value="{{ $pesanan->produk->nama_produk }}" disabled>
+                                    value="{{ $value->nama_produk }}" disabled>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="Panjang">Panjang</label>
                                     <div class="form-inline">
                                         <input type="number" class="form-control" id="panjang" name="panjang"
-                                            value="{{ $pesanan->panjang }}"disabled>
+                                            value="{{ $value->panjang }}"disabled>
                                         <label for="">mm</label>
                                     </div>
                                 </div>
@@ -51,7 +52,7 @@
                                     <label for="Lebar">Lebar</label>
                                     <div class="form-inline">
                                         <input type="number" class="form-control" id="lebar" name="lebar"
-                                            value="{{ $pesanan->lebar }}" disabled>
+                                            value="{{ $value->lebar }}" disabled>
                                         <label for="">mm</label>
                                     </div>
                                 </div>
@@ -59,8 +60,10 @@
                             <div class="form-group">
                                 <label for="deskripsi">Jumlah</label>
                                 <input type="number" name="jumlah" id="jumlah" class="form-control"
-                                    value="{{ $pesanan->kuantitas }}" disabled>
+                                    value="{{ $value->kuantitas }}" disabled>
                             </div>
+                            @endforeach
+                            
                             <div class="form-group">
                                 <label for="deskripsi">Harga Total</label>
                                 <input type="text" name="harga_total" id="harga" class="form-control"

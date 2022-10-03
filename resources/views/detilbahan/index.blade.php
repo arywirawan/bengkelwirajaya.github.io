@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Detil Bahan')
+@section('title', 'Detil Produk')
 @section('content')
     <div class="container-fluid">
         <!-- table kategori -->
@@ -7,7 +7,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Detil Bahan</h4>
+                        <h4 class="card-title">Detil Produk</h4>
                         <div class="card-tools">
                             <a href="{{ route('detilbahan.create') }}" class="btn btn-sm btn-primary">
                                 Baru
@@ -59,9 +59,6 @@
                                     $no = 1;
                                     ?>
                                     @foreach ($detilbahan as $detilkey => $item)
-                                        @php
-                                            echo $item->id;
-                                        @endphp
                                         <tr>
                                             <td>
                                                 {{ $no++ }}
@@ -166,6 +163,7 @@
                                                             <button type="submit" class="btn btn-sm btn-danger mb-2">
                                                                 Hapus
                                                             </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

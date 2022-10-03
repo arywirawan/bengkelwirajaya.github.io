@@ -18,7 +18,9 @@ class Pesanan extends Model
         'kuantitas',
         'harga_total',
         'status',
-        'keterangan'
+        'keterangan',
+        'created_at',
+        'updated_at'
 
     ];
     
@@ -30,4 +32,4 @@ class Pesanan extends Model
            return $this->belongsTo(Produk::class);
        }
     
-}
+}   

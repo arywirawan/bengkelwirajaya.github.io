@@ -9,6 +9,10 @@
                     <div class="card-header">
                         <h4 class="card-title">Pesanan</h4>
                         <div class="card-tools">
+                            <a href="{{ route('cetak') }}" class="btn btn-sm btn-success" target="_blank"> <i
+                                    class="fa fa-print"></i>
+                                Print PDF
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -16,8 +20,8 @@
                             <div class="row">
                                 <div class="col">
                                     <select class="form-select form-control" aria-label="Default select example"
-                                        name="user_id">
-                                        <option selected>Status</option>
+                                        name="keyword">
+                                        <option selected value="" readonly>Status</option>
                                         <option value="Belum Dibayar">Belum Dibayar</option>
                                         <option value="Sedang Dikerjakan">Sedang Dikerjakan</option>
                                         <option value="Selesai Dikerjakan">Selesai Dikerjakan</option>
@@ -56,11 +60,12 @@
                                         <th>Jumlah</th>
                                         <th>Harga Bayar</th>
                                         <th>Status</th>
+                                        <th>Waktu Pemesanan</th>
                                         <th width="15%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($pesanan as $item)
+                                    @foreach ($pesanan as $pesanankey => $item)
                                         <tr>
                                             <td>
                                                 {{ $item->id }}
@@ -69,16 +74,42 @@
                                                 {{ $item->user->name }}
                                             </td>
                                             <td>
-                                                {{ $item->produk->nama_produk }}
+                                                <?php
+                                                foreach ($pesanan[$pesanankey]->listpesanan as $listpesanankey => $value) {
+                                                    echo $value->nama_produk;
+                                                    echo '<hr>';
+                                                }
+                                                ?>
                                             </td>
                                             <td>
-                                                {{ $item->panjang }}
+                                                <?php
+                                                foreach ($pesanan[$pesanankey]->listpesanan as $listpesanankey => $value) {
+                                                    echo $value->panjang;
+                                                    echo '<br>';
+                                                    echo '<br>';
+                                                    echo '<hr>';
+                                                }
+                                                ?>
                                             </td>
                                             <td>
-                                                {{ $item->lebar }}
+                                                <?php
+                                                foreach ($pesanan[$pesanankey]->listpesanan as $listpesanankey => $value) {
+                                                    echo $value->lebar;
+                                                    echo '<br>';
+                                                    echo '<br>';
+                                                    echo '<hr>';
+                                                }
+                                                ?>
                                             </td>
                                             <td>
-                                                {{ $item->kuantitas }}
+                                                <?php
+                                                foreach ($pesanan[$pesanankey]->listpesanan as $listpesanankey => $value) {
+                                                    echo $value->kuantitas;
+                                                    echo '<br>';
+                                                    echo '<br>';
+                                                    echo '<hr>';
+                                                }
+                                                ?>
                                             </td>
                                             <td>
                                                 {{ $item->harga_total }}
@@ -86,6 +117,9 @@
 
                                             <td>
                                                 {{ $item->status }}
+                                            </td>
+                                            <td>
+                                                {{ $item->created_at }}
                                             </td>
                                             </td>
                                             <td>
@@ -101,7 +135,7 @@
                                             </td>
                                         </tr>
                                         <!-- Delete Modal -->
-                                        <div class="modal fade" id="deleteModal{{ 1 }}" tabindex="-1"
+                                        <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
                                             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -126,6 +160,7 @@
                                                             <button type="submit" class="btn btn-sm btn-danger mb-2">
                                                                 Hapus
                                                             </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -135,7 +170,7 @@
                                 </tbody>
                             </table>
                             <!-- untuk menampilkan link page, tambahkan skrip di bawah ini -->
-                            {{-- {{ $bahan->links() }} --}}
+                            {{-- {{ $pesanan->links() }} --}}
                         </div>
                     </div>
                 </div>

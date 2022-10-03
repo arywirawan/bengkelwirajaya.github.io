@@ -18,13 +18,14 @@ class BahanController extends Controller
     public function index(Request $request)
     {
         $bahan = Bahan::latest();
+        $stoks = Bahan::where('stok','<=',10)->get();
         $no = 0;
         if (request('keyword')) {
          $bahan = $bahan->where('nama_bahan', 'like', '%'.request('keyword').'%')
          ->orWhere('ukuran', 'like', '%'.request('keyword').'%');
         }
         $bahan = $bahan->paginate(7);
-        return view('bahan.index', compact('bahan', 'no'));
+        return view('bahan.index', compact('bahan','no','stoks'));
     
     }
 

@@ -1,12 +1,12 @@
 @extends('layouts.dashboard')
-@section('title', 'Tambah Bahan Baku')
+@section('title', 'Tambah Detil Produk')
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Form Detil Bahan</h3>
+                        <h3 class="card-title">Form Detil Produk</h3>
 
                         <div class="card-tools">
                             <a href="{{ route('detilbahan.index') }}" class="btn btn-sm btn-danger">
@@ -43,16 +43,18 @@
                                 <div class="border-top p-1 border-radius mt-3 mb-3 bahan-form">
                                     <div class="form-group">
                                         <label for="user" class="form-label">Bahan</label>
-                                        <select class="form-select form-control selectbahan" name="bahan_id[]" onchange="totalFunction()">
+                                        <select class="form-select form-control selectbahan" name="bahan_id[]"
+                                            onchange="totalFunction()">
                                             @foreach ($bahan as $item)
                                                 <option value="{{ $item->id }}" data-price={{ $item->harga }}>
-                                                    {{ $item->nama_bahan }} (Rp.{{$item->harga}})</option>
+                                                    {{ $item->nama_bahan }} (Rp.{{ $item->harga }})</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="jumlah">Jumlah Item</label>
-                                        <input type="number" name="jumlah_item[]" class="form-control jumlah" onkeyup="totalFunction()">
+                                        <input type="number" name="jumlah_item[]" class="form-control jumlah"
+                                            onkeyup="totalFunction()">
                                     </div>
                                 </div>
                             </div>
@@ -60,8 +62,8 @@
                             <div class="form-group">
                                 <label for="total">Total Biaya</label>
                                 <div>Rp.</div>
-                                <input type="int" class="form-control" id="total" value='0'
-                                    readonly="readonly" name="total_harga">
+                                <input type="int" class="form-control" id="total" value='0' readonly="readonly"
+                                    name="total_harga">
                             </div>
 
                             <div class="form-group">

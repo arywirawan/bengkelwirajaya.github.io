@@ -24,8 +24,13 @@ class HomepageController extends Controller
      }
 
      public function shop(){
-          $produk = Produk::paginate(9);
-          $menu = 'produk';
+        $produk = Produk::latest();
+        $no = 0;
+        if (request('keyword')) {
+         $produk = $produk->where('nama_produk', 'like', '%'.request('keyword').'%');
+        }
+         $menu = 'produk';
+        $produk = $produk->paginate(7);
           return view('homepage.shop', compact('menu', 'produk'));
      }
 

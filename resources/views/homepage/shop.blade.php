@@ -419,8 +419,9 @@
                 <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 mt-4 sidebar-shop-left">
                     <div class="product-categori">
                         <div class="search-product">
-                            <form action="#">
-                                <input class="form-control" placeholder="Search here..." type="text">
+                            <form action="{{ url('/shop') }}" method="GET">
+                                <input type="text" value="{{ request('keyword') }}" name="keyword" id="keyword"
+                                    class="form-control" placeholder="Cari produk disini">
                                 <button type="submit"> <i class="fa fa-search"></i> </button>
                             </form>
                         </div>

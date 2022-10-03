@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2022 at 08:07 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.11
+-- Generation Time: Aug 30, 2022 at 09:29 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,10 +43,9 @@ CREATE TABLE `bahans` (
 --
 
 INSERT INTO `bahans` (`id`, `nama_bahan`, `ukuran`, `harga`, `stok`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Besi Hollow 15x15', '1mm x 6M', 70000, 20, 1, '2022-07-12 15:38:37', '2022-07-19 15:38:37'),
-(2, 'Besi Ulir ', '1mm x 6M', 50000, 20, 1, '2022-08-17 12:29:27', '2022-08-12 12:29:27'),
-(3, 'gggggg', '293823982', 23893283, 40, 1, '2022-08-09 06:34:04', '2022-08-09 06:36:10'),
-(4, 'Besi Strip 20x15', '12 x 7 M', 200000, 1000, 1, '2022-08-24 08:27:16', '2022-08-24 08:27:16');
+(5, 'Besi Strip 3mm', '30mm x 6 M', 68000, 50, 1, '2022-08-27 09:06:29', '2022-08-30 11:23:33'),
+(6, 'Besi Nako 8mm', '6 M', 30000, 50, 1, '2022-08-27 09:08:44', '2022-08-30 11:23:21'),
+(7, 'Besi Strip 4mm', '19mm x 6 M', 58000, 50, 1, '2022-08-27 09:11:16', '2022-08-30 11:23:27');
 
 -- --------------------------------------------------------
 
@@ -69,9 +68,9 @@ CREATE TABLE `detil_bahans` (
 --
 
 INSERT INTO `detil_bahans` (`id`, `produk_id`, `bahan_id`, `jumlah_item`, `created_at`, `updated_at`, `total_harga`) VALUES
-(1, 1, '1,1', '10,20', '2022-08-11 00:22:32', '2022-08-23 07:45:49', 2800000),
-(2, 1, '1,2', '6,9', '2022-08-11 00:51:24', '2022-08-23 21:37:14', 1470000),
-(5, 1, '1,4', '10,20', '2022-08-24 08:31:09', '2022-08-24 08:31:09', 2800000);
+(14, 14, '5,7', '5,5', '2022-08-29 07:08:48', '2022-08-29 07:08:48', 630000),
+(15, 15, '6,7', '5,5', '2022-08-29 07:09:09', '2022-08-29 07:09:09', 440000),
+(16, 17, '6', '5', '2022-08-29 09:55:41', '2022-08-29 09:55:41', 150000);
 
 -- --------------------------------------------------------
 
@@ -151,7 +150,7 @@ CREATE TABLE `pembayarans` (
 --
 
 INSERT INTO `pembayarans` (`id`, `pesanan_id`, `user_id`, `bank`, `bukti_upload`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 'BCA', '1.jpg', 'Terkonfirmasi', '2022-07-12 15:38:37', '2022-08-24 09:57:57');
+(10, 22, 9, 'BCA', '20220830184024.jpg', 'Belum Terkonfirmasi', '2022-08-30 10:40:25', '2022-08-30 11:24:33');
 
 -- --------------------------------------------------------
 
@@ -180,7 +179,7 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `pesanans` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `produk_id` int(10) UNSIGNED NOT NULL,
+  `produk_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `panjang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lebar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `kuantitas` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -196,7 +195,7 @@ CREATE TABLE `pesanans` (
 --
 
 INSERT INTO `pesanans` (`id`, `user_id`, `produk_id`, `panjang`, `lebar`, `kuantitas`, `harga_total`, `status`, `keterangan`, `created_at`, `updated_at`) VALUES
-(1, 2, 4, '200', '500', '1', '20000', 'Sedang Dikerjakan', '', '2022-07-12 15:38:37', '2022-07-19 15:38:37');
+(22, 9, '15,14', '1600,1200', '600,500', '1,2', '2000000', 'Sedang Dikerjakan', 'Belum Diterima', '2022-08-30 10:38:22', '2022-08-30 10:40:25');
 
 -- --------------------------------------------------------
 
@@ -209,7 +208,7 @@ CREATE TABLE `produks` (
   `nama_produk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `foto_produk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `harga_jasa` bigint(20) NOT NULL,
-  `deskripsi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deskripsi` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -219,11 +218,10 @@ CREATE TABLE `produks` (
 --
 
 INSERT INTO `produks` (`id`, `nama_produk`, `foto_produk`, `harga_jasa`, `deskripsi`, `created_at`, `updated_at`) VALUES
-(1, 'Teralis Jendela', '20220803102154.jpg', 100000, 'Bagus Top Cer', '2022-07-12 15:38:37', '2022-07-19 15:38:37'),
-(2, 'Lemari', '20220803102154.jpg', 100000, 'Lorem Ipsum', '2022-08-04 14:59:59', '2022-07-19 15:38:37'),
-(4, 'Meja', '20220803104439.jpg', 1200000, 'Awawaokwaokwaokwaokwkawkoaokwa asa sa sa sa sasa s', '2022-08-17 12:29:27', '2022-08-12 12:29:27'),
-(7, 'Tralis Pintu asasas', 'C:\\xampp\\tmp\\phpE92C.tmp', 100000, 'as asasa sas as as a', '2022-08-24 08:48:20', '2022-08-24 08:48:20'),
-(8, 'Teralis qwqwq', 'C:\\xampp\\tmp\\php9101.tmp', 10000, 'qwqw qwq wq wq wq wq', '2022-08-24 08:50:08', '2022-08-24 08:50:08');
+(14, 'Teralis Jendela Model A (1200mm x 500mm)', '20220827160701.png', 100000, '<pre><strong>Material yang digunakan :</strong><br />Besi Strip lebar 30 mm dan tebal 3 mm<br />Besi Nako Polos 8 mm<br /><br />Harga diatas merupakan harga jasa pembuatan belum termasuk harga bahan baku. Maksimal ukuran 1200 mm x 500 mm<br />Pengukuran kusen jendela bisa dilakukan sendiri. Akurasi ukuran harus tepat.<br /><br />Rekomendasi ukuran yang sesuai :<br />800 mm x 400 mm sampai dengan 1200mm x 500 mm</pre>', '2022-08-27 08:07:01', '2022-08-27 08:07:01'),
+(15, 'Teralis Jendela Model A (1600mm x 600mm)', '20220827162031.png', 100000, '<pre><strong>Material yang digunakan :</strong><br />Besi Strip lebar 30 mm dan tebal 3 mm<br />Besi Nako Polos 8 mm<br /><br />Harga diatas merupakan harga jasa pembuatan belum termasuk harga bahan baku. Maksimal ukuran 1200 mm x 500 mm<br />Pengukuran kusen jendela bisa dilakukan sendiri. Akurasi ukuran harus tepat.<br /><br />Rekomendasi ukuran yang sesuai :<br />1200 mm x 400 mm sampai dengan 1600mm x 600 mm</pre>', '2022-08-27 08:20:31', '2022-08-27 08:20:31'),
+(16, 'Teralis Jendela Model A (2000mm x 600mm)', '20220827162127.png', 100000, '<pre><strong>Material yang digunakan :</strong><br />Besi Strip lebar 30 mm dan tebal 3 mm<br />Besi Nako Polos 8 mm<br /><br />Harga diatas merupakan harga jasa pembuatan belum termasuk harga bahan baku. Maksimal ukuran 1200 mm x 500 mm<br />Pengukuran kusen jendela bisa dilakukan sendiri. Akurasi ukuran harus tepat.<br /><br />Rekomendasi ukuran yang sesuai :<br />1600 mm x 500 mm sampai dengan 2000mm x 600 mm</pre>', '2022-08-27 08:21:27', '2022-08-27 08:21:27'),
+(17, 'Teralis Jendela Model B (1200mm x 500mm)', '20220827171723.png', 100000, '<p><strong>Material yang digunakan :</strong><br />Besi Strip lebar 30 mm dan tebal 3 mm<br />Besi Nako Polos 8 mm<br /><br />Harga diatas merupakan harga jasa pembuatan belum termasuk harga bahan baku. Maksimal ukuran 1200 mm x 500 mm<br />Pengukuran kusen jendela bisa dilakukan sendiri. Akurasi ukuran harus tepat.<br /><br />Rekomendasi ukuran yang sesuai :<br />1600 mm x 500 mm sampai dengan 2000mm x 600 mm</p>', '2022-08-27 09:17:23', '2022-08-27 09:17:23');
 
 -- --------------------------------------------------------
 
@@ -251,12 +249,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `level`, `notelp`, `alamat`, `image`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin 1', 'admin@admin.com', NULL, '$2y$10$jjQoJf6MBCknGmIKPmDKCeKrTnUW1hTF28iB3tcNltHi2N89Z3enC', 'admin', '0895410933236', 'Jl. Umalas II No. 36B, Kerobokan Kelod, Kuta Utara, Badung', 'profile-images/hiVAAgmzVJDb4imzfwBm0KhIVnfobbOij7cDv8si.png', NULL, '2022-08-03 04:08:21', '2022-08-03 04:08:21'),
-(2, 'Ary', 'arywirawans@gmail.com', NULL, '$2y$10$OraB7zjRQqFdURFWHDswF.60OJLEDZUveKVcIa1q07dscY1PegNMq', 'pelanggan', '089621521521', 'Jl. Muding Sari', 'profile-images/SNNwjU8DaVB37x1LpEx7YOCntbXJcLgIDnxMsjFR.png', NULL, '2022-08-05 08:08:06', '2022-08-05 08:08:06'),
-(3, 'Budi', 'budi@gmail.com', NULL, '$2y$10$CM4tvwVG0n8o/CmX3D50ROWBHk/DXioNOG.epYGm9pzXR8FSTvbEa', 'pelanggan', '08891212121212', 'Jl. Muding Sari', 'profile-images/nWmPQdHwjceJZn8Y5H7L9K98TK10HE2qjj2lqyXL.png', NULL, '2022-08-05 08:10:25', '2022-08-05 08:10:25'),
+(1, 'Admin', 'admin@admin.com', NULL, '$2y$10$jjQoJf6MBCknGmIKPmDKCeKrTnUW1hTF28iB3tcNltHi2N89Z3enC', 'admin', '0895410933236', 'Jl. Umalas II No. 36B, Kerobokan Kelod, Kuta Utara, Badung', 'profile-images/k6CJP6A22BWLdnEMyjb0UPrDQc5FGXzGp4iTa54I.jpg', NULL, '2022-08-03 04:08:21', '2022-08-27 19:22:15'),
+(2, 'Ary', 'arywirawans@gmail.com', NULL, '$2y$10$OraB7zjRQqFdURFWHDswF.60OJLEDZUveKVcIa1q07dscY1PegNMq', 'pelanggan', '089621521521', 'Jl. Muding Sari', 'profile-images/Master.png', NULL, '2022-08-05 08:08:06', '2022-08-05 08:08:06'),
+(3, 'Budi', 'budi@gmail.com', NULL, '$2y$10$CM4tvwVG0n8o/CmX3D50ROWBHk/DXioNOG.epYGm9pzXR8FSTvbEa', 'pelanggan', '08891212121212', 'Jl. Muding Sari', 'profile-images/Master.png', NULL, '2022-08-05 08:10:25', '2022-08-05 08:10:25'),
 (4, 'maman', 'maman@gmail.com', NULL, '$2y$10$QmlpQMK1yY1WQY37rY4g7OM5ngsuM3IsbdDGYVeMwlPiQDB2Y86uW', 'admin', '0985748391937', 'jalan mamankus', 'profile-images/hiVAAgmzVJDb4imzfwBm0KhIVnfobbOij7cDv8si.png', NULL, '2022-08-09 05:50:11', '2022-08-09 05:50:11'),
-(5, 'jole', 'makus@gmail.com', NULL, '$2y$10$QMQWJq9Nr48ARAxha.lfgeQk.JgBZasNLEDtzR2CHX0FevjvS8UfO', 'pelanggan', '0987654567890', 'jalan jalan', 'profile-images/hiVAAgmzVJDb4imzfwBm0KhIVnfobbOij7cDv8si.png', NULL, '2022-08-14 02:32:31', '2022-08-14 02:32:31'),
-(6, 'user', 'user@gmail.com', NULL, '$2y$10$MrHB53E/enSRvVa25dX0NO.K9HVGOomTzI2MYoJ3CjFk9XDc7kU56', 'pelanggan', '09876543456789', 'jalan mamana', 'profile-images/hiVAAgmzVJDb4imzfwBm0KhIVnfobbOij7cDv8si.png', NULL, '2022-08-23 04:53:15', '2022-08-23 04:53:15');
+(9, 'I Kadek Surya Indrawan', 'kadeksuryaindrawan@gmail.com', NULL, '$2y$10$1xJ2MXkHljKnO3RGrOyZ4OCSjCYnxDHr2js/r68Dkti1bWnaChDNK', 'pelanggan', '08970945425', 'Denpasar', 'profile-images/edBw5cxqXgqSEacT1apDVZhOxandUQkm4HBTMCTl.jpg', NULL, '2022-08-29 06:38:40', '2022-08-29 06:38:40'),
+(10, 'kadek', 'kadek@gmail.com', NULL, '$2y$10$.Njx1jbZnX2ZifcUFJcxs.dRSirNBWUsR40TT.ghLUoinvE7tUmyu', 'pelanggan', '0819289321', 'Pemogan', 'profile-images/ZWX66lcfEltXvnexLWuSVZbdKSbv8ui7IwouXSae.jpg', NULL, '2022-08-30 08:22:31', '2022-08-30 08:22:31');
 
 --
 -- Indexes for dumped tables
@@ -315,8 +313,7 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `pesanans`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `produk_id` (`produk_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `produks`
@@ -339,13 +336,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bahans`
 --
 ALTER TABLE `bahans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `detil_bahans`
 --
 ALTER TABLE `detil_bahans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -363,7 +360,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `pembayarans`
 --
 ALTER TABLE `pembayarans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -375,19 +372,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `pesanans`
 --
 ALTER TABLE `pesanans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `produks`
 --
 ALTER TABLE `produks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -410,7 +407,6 @@ ALTER TABLE `pembayarans`
 -- Constraints for table `pesanans`
 --
 ALTER TABLE `pesanans`
-  ADD CONSTRAINT `produk_id` FOREIGN KEY (`produk_id`) REFERENCES `produks` (`id`),
   ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 

@@ -16,7 +16,7 @@
     <!-- <![endif]-->
 
     <title>Material Design for Bootstrap</title>
-
+    {{-- Tampil di email --}}
     <style type="text/css">
         body {
             width: 100%;

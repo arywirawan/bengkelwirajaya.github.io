@@ -109,7 +109,7 @@
                                 <img src="{{ asset('gambar/' . $item->foto_produk) }}" class="img-fluid" alt="Image"
                                     style="width: 300px; height: 300px;">
                                 <div class="mask-icon">
-                                    <a class="cart" href="">Add to Cart</a>
+                                    <a class="cart" href="{{ url('/shop/' . $item->id) }}">Add to Cart</a>
                                 </div>
                             </div>
                             <div class="why-text">

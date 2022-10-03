@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <label for="User">User</label>
                                 <input type="text" name="user_id" id="id_user" class="form-control"
-                                    value="{{ $pembayaran->user_id }}" disabled>
+                                    value="{{ $pembayaran->user->name }}" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="Produk">Bank</label>

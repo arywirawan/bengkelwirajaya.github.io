@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pesanan;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\Produk;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use PDF;
 
 class PesananController extends Controller
 {
@@ -17,12 +19,34 @@ class PesananController extends Controller
     public function index(Request $request)
     {
          
-        $pesanan = Pesanan::latest();
+        $pesanan = Pesanan::paginate(7);
         $no = 0;
         if (request('keyword')) {
-         $pesanan = $pesanan->where('status', 'like', '%'.request('keyword').'%');
+         $pesanan = $pesanan->where('status', 'like', request('keyword'));
         }
-        $pesanan = $pesanan->paginate(7);
+
+        foreach ($pesanan as $keylist => $item) {
+            $produk_id = explode(',', $pesanan[$keylist]->produk_id);
+            $panjang = explode(',', $item->panjang);
+            $lebar = explode(',', $item->lebar);
+            $kuantitas = explode(',', $item->kuantitas);
+            $listpesanan = [];
+            foreach ($produk_id as $keyproduk => $value) {
+                $getproduk = Produk::find($value);
+                // falidasi data id menjadi nama
+                array_push(
+                    $listpesanan,
+                    (object) [
+                        'nama_produk' => $getproduk->nama_produk,
+                        'panjang' =>$panjang[$keyproduk],
+                        'lebar' =>$lebar[$keyproduk],
+                        'kuantitas' =>$kuantitas[$keyproduk],
+                    ]
+                );
+            }
+            // menambahkan object baru "bahan"
+            $pesanan[$keylist]->listpesanan = $listpesanan;
+        }
         return view('pesanan.index', compact('pesanan'));
     }
 
@@ -68,6 +92,26 @@ class PesananController extends Controller
     public function edit($id)
     {
        $pesanan = Pesanan::findOrFail($id);
+       $produk_id = explode(',', $pesanan->produk_id);
+            $panjang = explode(',', $pesanan->panjang);
+            $lebar = explode(',', $pesanan->lebar);
+            $kuantitas = explode(',', $pesanan->kuantitas);
+            $listpesanan = [];
+            foreach ($produk_id as $keyproduk => $value) {
+                $getproduk = Produk::find($value);
+                // falidasi data id menjadi nama
+                array_push(
+                    $listpesanan,
+                    (object) [
+                        'nama_produk' => $getproduk->nama_produk,
+                        'panjang' =>$panjang[$keyproduk],
+                        'lebar' =>$lebar[$keyproduk],
+                        'kuantitas' =>$kuantitas[$keyproduk],
+                    ]
+                );
+            }
+            // menambahkan object baru "bahan"
+            $pesanan->listpesanan = $listpesanan;
         return view('pesanan.edit', compact('pesanan'));
     }
 
@@ -114,5 +158,41 @@ class PesananController extends Controller
         $pesanan = Pesanan::find($id);
         $pesanan->update(['status' => $input, ]);
         return redirect('/admin/pesanan')->with('success','Status pesanan telah diubah!');
+    }
+
+    public function generatePDF()
+    {
+        $pesanan = Pesanan::where('status', 'like', 'Selesai')->get();
+
+        foreach ($pesanan as $keylist => $item) {
+            $produk_id = explode(',', $pesanan[$keylist]->produk_id);
+            $panjang = explode(',', $item->panjang);
+            $lebar = explode(',', $item->lebar);
+            $kuantitas = explode(',', $item->kuantitas);
+            $listpesanan = [];
+            foreach ($produk_id as $keyproduk => $value) {
+                $getproduk = Produk::find($value);
+                // falidasi data id menjadi nama
+                array_push(
+                    $listpesanan,
+                    (object) [
+                        'nama_produk' => $getproduk->nama_produk,
+                        'panjang' =>$panjang[$keyproduk],
+                        'lebar' =>$lebar[$keyproduk],
+                        'kuantitas' =>$kuantitas[$keyproduk],
+                    ]
+                );
+            }
+            // menambahkan object baru "bahan"
+            $pesanan[$keylist]->listpesanan = $listpesanan;
+        }
+        
+        $data = [
+            'pesanan' => $pesanan
+        ]; 
+              
+        $pdf = PDF::loadView('pesanan.pdf', $data);
+        return $pdf->setPaper('a4', 'landscape')->stream();
+     
     }
 }
